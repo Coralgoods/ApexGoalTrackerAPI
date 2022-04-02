@@ -4,14 +4,16 @@ using ApexGoalTrackerAPI.DataObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ApexGoalTrackerAPI.Migrations
 {
     [DbContext(typeof(ApexContext))]
-    partial class ApexContextModelSnapshot : ModelSnapshot
+    [Migration("20220402224700_updatedatabsev3")]
+    partial class updatedatabsev3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
