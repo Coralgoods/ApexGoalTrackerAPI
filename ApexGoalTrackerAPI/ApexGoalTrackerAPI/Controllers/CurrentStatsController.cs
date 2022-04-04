@@ -25,14 +25,33 @@ namespace ApexGoalTrackerAPI.Controllers
 
         // GET: api/<CurrentStatsController>
         [HttpGet]
-        public IEnumerable<string> Get()
+       public async Task<CurrentStats> GetUserStats(string ApexID)
         {
-            return new string[] { "value1", "value2" };
+            CurrentStats currentStats = null; 
+
+            using (ApexContext context = new ApexContext())
+            {
+                currentStats = context.currentStats.Single(u => u.ApexID == ApexID);
+            }
+            return currentStats; 
+        }
+
+
+        [HttpGet]
+        public async Task<AllCurrentStats> GetAllUserStats()  
+        {
+            AllCurrentStats currentStats = new AllCurrentStats();
+
+            using (ApexContext context = new ApexContext())
+            {
+                currentStats.allCurrentStats = context.currentStats.ToList(); 
+            }
+            return currentStats;
         }
 
         // POST api/<CurrentStatsController>
-        [HttpPost]
-        public void Post([FromBody] CreatedAtActionResult name)
+        [HttpPost] 
+        public void Post([FromBody] CreatedAtActionResult name)  //rename to something better? 
         {
 
             string apiUri = $"https://apex-legends.p.rapidapi.com/stats/{name}/PC";
