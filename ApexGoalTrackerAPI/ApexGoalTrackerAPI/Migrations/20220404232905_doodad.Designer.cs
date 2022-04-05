@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ApexGoalTrackerAPI.Migrations
 {
     [DbContext(typeof(ApexContext))]
-    [Migration("20220402224700_updatedatabsev3")]
-    partial class updatedatabsev3
+    [Migration("20220404232905_doodad")]
+    partial class doodad
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

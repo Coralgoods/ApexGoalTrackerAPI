@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ApexGoalTrackerAPI.Migrations
 {
-    public partial class initdatebaseV2 : Migration
+    public partial class doodad : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -24,21 +24,24 @@ namespace ApexGoalTrackerAPI.Migrations
                 name: "currentStats",
                 columns: table => new
                 {
-                    ApexID = table.Column<string>(nullable: false),
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ApexID = table.Column<string>(nullable: true),
+                    Date = table.Column<DateTime>(nullable: false),
+                    UserName = table.Column<string>(nullable: true),
                     RankSore = table.Column<int>(nullable: false),
                     RankName = table.Column<string>(nullable: true),
-                    Date = table.Column<DateTime>(nullable: false),
                     banner = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_currentStats", x => x.ApexID);
+                    table.PrimaryKey("PK_currentStats", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_currentStats_Users_ApexID",
-                        column: x => x.ApexID,
+                        name: "FK_currentStats_Users_UserName",
+                        column: x => x.UserName,
                         principalTable: "Users",
                         principalColumn: "UserName",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -59,6 +62,11 @@ namespace ApexGoalTrackerAPI.Migrations
                         principalColumn: "UserName",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_currentStats_UserName",
+                table: "currentStats",
+                column: "UserName");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
