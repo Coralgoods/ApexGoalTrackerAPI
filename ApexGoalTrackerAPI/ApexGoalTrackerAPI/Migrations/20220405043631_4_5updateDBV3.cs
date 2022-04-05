@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ApexGoalTrackerAPI.Migrations
 {
-    public partial class doodad : Migration
+    public partial class _4_5updateDBV3 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -27,8 +27,8 @@ namespace ApexGoalTrackerAPI.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ApexID = table.Column<string>(nullable: true),
-                    Date = table.Column<DateTime>(nullable: false),
                     UserName = table.Column<string>(nullable: true),
+                    Date = table.Column<DateTime>(nullable: false),
                     RankSore = table.Column<int>(nullable: false),
                     RankName = table.Column<string>(nullable: true),
                     banner = table.Column<string>(nullable: true)

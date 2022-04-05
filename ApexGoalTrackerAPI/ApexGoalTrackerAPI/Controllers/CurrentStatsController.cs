@@ -71,10 +71,10 @@ namespace ApexGoalTrackerAPI.Controllers
             _Legends = apiTask.Result.legends;
 
             CurrentStats currentStats = new CurrentStats();
-            User user = new User();
-            user.UserName = input.UserName;
-            user.ApexID = input.ApexID;
-            user.Password = "dtest"; 
+            //User user = new User();
+            //user.UserName = input.UserName;
+            //user.ApexID = input.ApexID;
+            //user.Password = "dtest"; 
             //CurrentStatsUpdate currentStats = new CurrentStatsUpdate();
             using (ApexContext context = new ApexContext())
             {
@@ -84,9 +84,9 @@ namespace ApexGoalTrackerAPI.Controllers
                 currentStats.RankSore = _Userglobal.rank.rankScore; 
                 currentStats.RankName = _Userglobal.rank.rankName;
                 currentStats.banner = _Legends.selected.ImgAssets.banner;
-                //currentStats.UserName = input.UserName; 
-                
-                currentStats.User = user;
+                currentStats.UserName = input.UserName;
+                //currentStats.UserName = input.UserName;                
+                //currentStats.User = user;
 
                 context.currentStats.Add(currentStats);
                 context.SaveChanges();
