@@ -6,15 +6,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ApexGoalTrackerAPI.DataObjects
 {
-    public class CurrentStats
+    public class CurrentStatsUpdate
     {
-        //[ForeignKey("Ticket")]
-        //public virtual int ApexID { get; set; }
-        [Key]
+        //Not used. 
         public int Id { get; set; }
         public string ApexID { get; set; }
-        [ForeignKey("ApexID")]
-        public User User { get; set; }
+        public string UserName { get; set; }
         public DateTime Date { get; set; }
         public int RankSore { get; set; }
         public string RankName { get; set; }

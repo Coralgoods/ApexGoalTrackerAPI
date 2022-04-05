@@ -5,5 +5,6 @@ namespace ApexGoalTrackerAPI.DataObjects
     public class UserApi
     {
         public string ApexID { get; set; }
+        public string UserName { get; set; }
     }
 }
