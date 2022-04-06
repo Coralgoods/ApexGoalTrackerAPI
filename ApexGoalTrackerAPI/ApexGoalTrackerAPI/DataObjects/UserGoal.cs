@@ -8,11 +8,11 @@ namespace ApexGoalTrackerAPI.DataObjects
     public class UserGoal
     {
         [Key]
-        public string ApexID { get; set; }
-        [ForeignKey("ApexID")]
+        public string UserName { get; set; }      
+        [ForeignKey("UserName")]
         public User User { get; set; }
         public int RankScore { get; set; }
         public string RankName { get; set; }
-
+        public string ApexID { get; set; }
     }
 }
