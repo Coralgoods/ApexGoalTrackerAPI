@@ -38,23 +38,28 @@ namespace ApexGoalTrackerAPI.Migrations
                     b.Property<int>("RankSore")
                         .HasColumnType("int");
 
+                    b.Property<int>("UserID")
+                        .HasColumnType("int");
+
                     b.Property<string>("UserName")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("banner")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserName");
+                    b.HasIndex("UserID");
 
                     b.ToTable("currentStats");
                 });
 
             modelBuilder.Entity("ApexGoalTrackerAPI.DataObjects.User", b =>
                 {
-                    b.Property<string>("UserName")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("UserID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ApexID")
                         .IsRequired()
@@ -66,15 +71,23 @@ namespace ApexGoalTrackerAPI.Migrations
                         .HasColumnType("nvarchar(20)")
                         .HasMaxLength(20);
 
-                    b.HasKey("UserName");
+                    b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserID");
 
                     b.ToTable("Users");
                 });
 
             modelBuilder.Entity("ApexGoalTrackerAPI.DataObjects.UserGoal", b =>
                 {
+                    b.Property<int>("GoalID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
                     b.Property<string>("ApexID")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RankName")
                         .HasColumnType("nvarchar(max)");
@@ -82,7 +95,15 @@ namespace ApexGoalTrackerAPI.Migrations
                     b.Property<int>("RankScore")
                         .HasColumnType("int");
 
-                    b.HasKey("ApexID");
+                    b.Property<int>("UserID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("GoalID");
+
+                    b.HasIndex("UserID");
 
                     b.ToTable("userGoals");
                 });
@@ -91,14 +112,16 @@ namespace ApexGoalTrackerAPI.Migrations
                 {
                     b.HasOne("ApexGoalTrackerAPI.DataObjects.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserName");
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("ApexGoalTrackerAPI.DataObjects.UserGoal", b =>
                 {
                     b.HasOne("ApexGoalTrackerAPI.DataObjects.User", "User")
                         .WithMany()
-                        .HasForeignKey("ApexID")
+                        .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

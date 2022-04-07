@@ -30,6 +30,7 @@ namespace ApexGoalTrackerAPI.Controllers
             UserGoal goal = new UserGoal();
             using (ApexContext context = new ApexContext())
             {
+                goal.UserName = userGoal.UserName;
                 goal.RankName = userGoal.RankName;
                 goal.RankScore = userGoal.RankScore;
                 goal.ApexID = userGoal.ApexID;
@@ -40,15 +41,16 @@ namespace ApexGoalTrackerAPI.Controllers
 
         // PUT api/<UserGoalController>/5
         [HttpPut("{id}")]
-        public void Put(string ApexId, [FromBody] UserGoalApi userGoal)
-        {
-            UserGoal goal = new UserGoal();
+        public void Put(int ID,[FromBody] UserGoalApi userGoal)
+        {        
             using (ApexContext context = new ApexContext())
             {
+                UserGoal goal = context.userGoals.Single(u => u.GoalID == ID);
+                goal.UserName = userGoal.UserName;
                 goal.RankName = userGoal.RankName;
                 goal.RankScore = userGoal.RankScore;
                 goal.ApexID = userGoal.ApexID;
-                context.userGoals.Add(goal);
+                context.userGoals.Update(goal);
                 context.SaveChanges();
             }
         }
