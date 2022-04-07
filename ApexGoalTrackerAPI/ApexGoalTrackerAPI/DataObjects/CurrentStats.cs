@@ -11,10 +11,11 @@ namespace ApexGoalTrackerAPI.DataObjects
 
         [Key]
         public int Id { get; set; }
+        public int UserID { get; set; }
+        [ForeignKey("UserID")]
+        public User User { get; set; }
         public string ApexID { get; set; }
         public string UserName { get; set; }
-        [ForeignKey("UserName")]
-        public User User { get; set; }
         public DateTime Date { get; set; }
         public int RankSore { get; set; }
         public string RankName { get; set; }

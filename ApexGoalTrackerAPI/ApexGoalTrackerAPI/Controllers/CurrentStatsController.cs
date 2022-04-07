@@ -22,7 +22,8 @@ namespace ApexGoalTrackerAPI.Controllers
         List<PlayerList> _PlayerList;
 
         global _Userglobal = null; //rename
-        legends _Legends = null; 
+        legends _Legends = null;
+        int _UserID; 
 
 
 
@@ -35,7 +36,9 @@ namespace ApexGoalTrackerAPI.Controllers
 
             using (ApexContext context = new ApexContext())
             {
-                currentStats = context.currentStats.Single(u => u.ApexID == ApexID);
+                //currentStats = context.currentStats.Single(u => u.ApexID == ApexID);
+                //currentStats = context.currentStats.Find(x => x.ApexID == ApexID);
+                //currentStats = context.currentStats.Find(x => x.ApexID == ApexID);
             }
             return currentStats; 
         }
@@ -69,6 +72,7 @@ namespace ApexGoalTrackerAPI.Controllers
 
             _Userglobal = apiTask.Result.global;
             _Legends = apiTask.Result.legends;
+            //_UserID = Int32.Parse(UserID); 
 
             CurrentStats currentStats = new CurrentStats();
             //User user = new User();
@@ -79,6 +83,7 @@ namespace ApexGoalTrackerAPI.Controllers
             using (ApexContext context = new ApexContext())
             {
 
+                currentStats.UserID = input.UserID; //Might not need
                 currentStats.ApexID = _Userglobal.name; 
                 currentStats.Date = DateTime.Now;
                 currentStats.RankSore = _Userglobal.rank.rankScore; 
