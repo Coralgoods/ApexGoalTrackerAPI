@@ -31,8 +31,6 @@ namespace ApexGoalTrackerAPI.Controllers
             {               
                 //currentStats.allCurrentStats = context.currentStats.ToList(); //Works for all records
                 currentStats.allCurrentStats = context.currentStats.Where(u => u.ApexID == userApi.ApexID).ToList();
-
-
             }
             return currentStats; 
         }
