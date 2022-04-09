@@ -19,37 +19,39 @@ namespace ApexGoalTrackerAPI.Controllers
         global _Userglobal = null; 
         legends _Legends = null;
 
-        // GET: api/<CurrentStatsController>
-        //[HttpGet("{ApexID}")]
-        [HttpGet]
-        public async Task<AllCurrentStats> GetUserStats([FromBody] UserApi userApi)
+        //GET: api/<CurrentStatsController>
+        [HttpGet("{ApexID}")]
+        //[HttpGet]
+        //public async Task<AllCurrentStats> GetUserStats(string ApexID,[FromBody] UserApi userApi)
+        public async Task<AllCurrentStats> GetUserStats(string ApexID)
         {
 
-           AllCurrentStats currentStats = new AllCurrentStats();
+            AllCurrentStats currentStats = new AllCurrentStats();
 
             using (ApexContext context = new ApexContext())
-            {               
+            {
                 //currentStats.allCurrentStats = context.currentStats.ToList(); //Works for all records
-                currentStats.allCurrentStats = context.currentStats.Where(u => u.ApexID == userApi.ApexID).ToList();
+                //currentStats.allCurrentStats = context.currentStats.Where(u => u.ApexID == userApi.ApexID).ToList();
+                currentStats.allCurrentStats = context.currentStats.Where(u => u.ApexID == ApexID).ToList();
             }
-            return currentStats; 
+            return currentStats;
+
         }
 
+            //[HttpGet]
+            //public async Task<AllCurrentStats> GetAllUserStats()  
+            //{
+            //    AllCurrentStats currentStats = new AllCurrentStats();
 
-        //[HttpGet]
-        //public async Task<AllCurrentStats> GetAllUserStats()  
-        //{
-        //    AllCurrentStats currentStats = new AllCurrentStats();
+            //    using (ApexContext context = new ApexContext())
+            //    {
+            //        currentStats.allCurrentStats = context.currentStats.ToList(); 
+            //    }
+            //    return currentStats;
+            //}
 
-        //    using (ApexContext context = new ApexContext())
-        //    {
-        //        currentStats.allCurrentStats = context.currentStats.ToList(); 
-        //    }
-        //    return currentStats;
-        //}
-
-        // POST api/<CurrentStatsController>
-        [HttpPost] 
+            // POST api/<CurrentStatsController>
+            [HttpPost] 
         public void Post([FromBody] UserApi input)  //rename to something better? 
         {
           
@@ -70,7 +72,8 @@ namespace ApexGoalTrackerAPI.Controllers
             {
 
                 currentStats.UserID = input.UserID; 
-                currentStats.ApexID = _Userglobal.name; //Might need to change this to input.ApexID 
+                //currentStats.ApexID = _Userglobal.name; //Might need to change this to input.ApexID 
+                currentStats.ApexID = input.ApexID;
                 currentStats.Date = DateTime.Now;
                 currentStats.RankSore = _Userglobal.rank.rankScore; 
                 currentStats.RankName = _Userglobal.rank.rankName;
