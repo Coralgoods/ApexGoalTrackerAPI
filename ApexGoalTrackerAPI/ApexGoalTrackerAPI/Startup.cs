@@ -26,6 +26,16 @@ namespace ApexGoalTrackerAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllOrigins",
+                    builder =>
+                    {
+                        builder.AllowAnyHeader()
+                                       .AllowAnyOrigin()
+                                      .AllowAnyMethod();
+                    });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -35,6 +45,7 @@ namespace ApexGoalTrackerAPI
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseCors("AllOrigins");
 
             app.UseHttpsRedirection();
 

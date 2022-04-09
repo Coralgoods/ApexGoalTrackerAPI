@@ -30,7 +30,6 @@ namespace ApexGoalTrackerAPI.Controllers
         // POST api/<UserController>
         [HttpPost]
         public void Create([FromBody] User user)
-
         {
             
             using (ApexContext context = new ApexContext())
