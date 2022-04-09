@@ -2,9 +2,8 @@
 using Flurl.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace ApexGoalTrackerAPI.Controllers
 {
@@ -13,28 +12,28 @@ namespace ApexGoalTrackerAPI.Controllers
     public class UserGoalController : ControllerBase
     {
         // GET: api/<UserGoalController>
-        [HttpGet]
-        public async Task<UserGoal> Get()
+        [HttpGet("{name}")]
+        public async Task<UserGoal> Get(string name)
         {
-            string apiUri = "";
-            var apiTask = await apiUri.WithHeaders(new
+            UserGoal user = null;
+            using (ApexContext context = new ApexContext())
             {
-                x_rapidapi_host = "apex-legends.p.rapidapi.com",
-                x_rapidapi_key = "a5b04e6222mshe0376e842564881p134a29jsnd3f1bd79e8cc"
-            }).GetJsonAsync<UserGoal>();
-
-            return apiTask;
+                user = context.userGoals.Single(u => u.ApexID == name);
+            }
+            return user;
         }
 
         // POST api/<UserGoalController>
         [HttpPost]
-        public void Post([FromBody] UserGoal userGoal)
+        public void Post([FromBody] UserGoalApi userGoal)
         {
             UserGoal goal = new UserGoal();
             using (ApexContext context = new ApexContext())
             {
+                goal.UserName = userGoal.UserName;
                 goal.RankName = userGoal.RankName;
                 goal.RankScore = userGoal.RankScore;
+                goal.ApexID = userGoal.ApexID;
                 context.userGoals.Add(goal);
                 context.SaveChanges();
             }
@@ -42,14 +41,16 @@ namespace ApexGoalTrackerAPI.Controllers
 
         // PUT api/<UserGoalController>/5
         [HttpPut("{id}")]
-        public void Put(string ApexId, [FromBody] UserGoal userGoal)
-        {
-            UserGoal goal = new UserGoal();
+        public void Put(int ID,[FromBody] UserGoalApi userGoal)
+        {        
             using (ApexContext context = new ApexContext())
             {
+                UserGoal goal = context.userGoals.Single(u => u.GoalID == ID);
+                goal.UserName = userGoal.UserName;
                 goal.RankName = userGoal.RankName;
                 goal.RankScore = userGoal.RankScore;
-                context.userGoals.Add(goal);
+                goal.ApexID = userGoal.ApexID;
+                context.userGoals.Update(goal);
                 context.SaveChanges();
             }
         }
