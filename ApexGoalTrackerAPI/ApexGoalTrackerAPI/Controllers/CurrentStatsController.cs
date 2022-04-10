@@ -5,7 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Flurl.Http;
-using ApexGoalTrackerAPI.DataObjects; 
+using ApexGoalTrackerAPI.DataObjects;
+using System.Collections;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -15,49 +16,42 @@ namespace ApexGoalTrackerAPI.Controllers
     [ApiController]
     public class CurrentStatsController : ControllerBase
     {
-
-        List<CurrentStats> _UserStats;
-        List<global> _UserGlobal;
-        List<Global_legends> _UserGlobalLegends;
-        List<PlayerList> _PlayerList;
-
-        global _Userglobal = null; //rename
+        global _Userglobal = null; 
         legends _Legends = null;
-        int _UserID; 
 
-
-
-        // GET: api/<CurrentStatsController>
+        //GET: api/<CurrentStatsController>
         [HttpGet("{ApexID}")]
         //[HttpGet]
-        public async Task<CurrentStats> GetUserStats(string ApexID)
+        //public async Task<AllCurrentStats> GetUserStats(string ApexID,[FromBody] UserApi userApi)
+        public async Task<AllCurrentStats> GetUserStats(string ApexID)
         {
-            CurrentStats currentStats = null; 
 
-            using (ApexContext context = new ApexContext())
-            {
-                //currentStats = context.currentStats.Single(u => u.ApexID == ApexID);
-                //currentStats = context.currentStats.Find(x => x.ApexID == ApexID);
-                //currentStats = context.currentStats.Find(x => x.ApexID == ApexID);
-            }
-            return currentStats; 
-        }
-
-
-        [HttpGet]
-        public async Task<AllCurrentStats> GetAllUserStats()  
-        {
             AllCurrentStats currentStats = new AllCurrentStats();
 
             using (ApexContext context = new ApexContext())
             {
-                currentStats.allCurrentStats = context.currentStats.ToList(); 
+                //currentStats.allCurrentStats = context.currentStats.ToList(); //Works for all records
+                //currentStats.allCurrentStats = context.currentStats.Where(u => u.ApexID == userApi.ApexID).ToList();
+                currentStats.allCurrentStats = context.currentStats.Where(u => u.ApexID == ApexID).ToList();
             }
             return currentStats;
+
         }
 
-        // POST api/<CurrentStatsController>
-        [HttpPost] 
+            //[HttpGet]
+            //public async Task<AllCurrentStats> GetAllUserStats()  
+            //{
+            //    AllCurrentStats currentStats = new AllCurrentStats();
+
+            //    using (ApexContext context = new ApexContext())
+            //    {
+            //        currentStats.allCurrentStats = context.currentStats.ToList(); 
+            //    }
+            //    return currentStats;
+            //}
+
+            // POST api/<CurrentStatsController>
+            [HttpPost] 
         public void Post([FromBody] UserApi input)  //rename to something better? 
         {
           
@@ -72,27 +66,19 @@ namespace ApexGoalTrackerAPI.Controllers
 
             _Userglobal = apiTask.Result.global;
             _Legends = apiTask.Result.legends;
-            //_UserID = Int32.Parse(UserID); 
 
             CurrentStats currentStats = new CurrentStats();
-            //User user = new User();
-            //user.UserName = input.UserName;
-            //user.ApexID = input.ApexID;
-            //user.Password = "dtest"; 
-            //CurrentStatsUpdate currentStats = new CurrentStatsUpdate();
             using (ApexContext context = new ApexContext())
             {
 
-                currentStats.UserID = input.UserID; //Might not need
-                currentStats.ApexID = _Userglobal.name; 
+                currentStats.UserID = input.UserID; 
+                //currentStats.ApexID = _Userglobal.name; //Might need to change this to input.ApexID 
+                currentStats.ApexID = input.ApexID;
                 currentStats.Date = DateTime.Now;
                 currentStats.RankSore = _Userglobal.rank.rankScore; 
                 currentStats.RankName = _Userglobal.rank.rankName;
                 currentStats.banner = _Legends.selected.ImgAssets.banner;
                 currentStats.UserName = input.UserName;
-                //currentStats.UserName = input.UserName;                
-                //currentStats.User = user;
-
                 context.currentStats.Add(currentStats);
                 context.SaveChanges();
             }
