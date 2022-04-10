@@ -25,15 +25,30 @@ namespace ApexGoalTrackerAPI.Controllers
             }
             return user;
         }
+        // GET: /<UserController>/userName
+        [HttpGet]
+        public async Task<User> Get( [FromBody] UserLoginApi userLogin)
+        {
+            User user = null;
+            using (ApexContext context = new ApexContext())
+            {
+                user = context.Users.Single(u => u.UserName == userLogin.UserName && u.Password == userLogin.Password );
+            }
+            return user;
+        }
 
 
         // POST api/<UserController>
         [HttpPost]
-        public void Create([FromBody] User user)
+        public void Create([FromBody] UserCreateApi userApi)
         {
-            
+            User user = new User();
             using (ApexContext context = new ApexContext())
             {
+                user.UserName = userApi.UserName;
+                user.ApexID = userApi.ApexID;
+                user.Password = userApi.Password;
+
                 context.Users.Add(user);
                 context.SaveChanges();
             }
