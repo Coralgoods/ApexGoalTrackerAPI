@@ -26,15 +26,25 @@ namespace ApexGoalTrackerAPI.Controllers
             return user;
         }
         // GET: /<UserController>/userName
-        [HttpGet]
-        public async Task<User> Get( [FromBody] UserLoginApi userLogin)
+        [HttpGet("{userName}/{Password}")]
+        public async Task <bool> Login(string userName, string password)
         {
             User user = null;
             using (ApexContext context = new ApexContext())
             {
-                user = context.Users.Single(u => u.UserName == userLogin.UserName && u.Password == userLogin.Password );
+                user = context.Users.SingleOrDefault(u => u.UserName == userName && u.Password == password );
             }
-            return user;
+            if (user == null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+               
+            
+
         }
 
 
