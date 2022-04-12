@@ -9,6 +9,7 @@ namespace ApexGoalTrackerAPI.DataObjects
     {
         //public int GoalID { get; set; }
         //public int UserID { get; set; }
+        public int UserID { get; set; }
         public string UserName { get; set; }
         public string ApexID { get; set; }
         public int RankScore { get; set; }

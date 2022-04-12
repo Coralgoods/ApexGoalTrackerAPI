@@ -30,6 +30,7 @@ namespace ApexGoalTrackerAPI.Controllers
             UserGoal goal = new UserGoal();
             using (ApexContext context = new ApexContext())
             {
+                goal.UserID = userGoal.UserID;
                 goal.UserName = userGoal.UserName;
                 goal.RankName = userGoal.RankName;
                 goal.RankScore = userGoal.RankScore;
