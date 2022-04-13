@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ApexGoalTrackerAPI.Migrations
 {
-    public partial class _4_6DBupdateV3 : Migration
+    public partial class test5 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

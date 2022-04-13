@@ -2,7 +2,7 @@
 
 namespace ApexGoalTrackerAPI.Migrations
 {
-    public partial class ApexTracker : Migration
+    public partial class azure : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
