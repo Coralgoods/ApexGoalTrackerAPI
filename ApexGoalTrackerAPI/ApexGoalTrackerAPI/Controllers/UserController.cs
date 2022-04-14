@@ -21,6 +21,7 @@ namespace ApexGoalTrackerAPI.Controllers
             User user = null;
             using (ApexContext context = new ApexContext())
             {
+                
                 user = context.Users.Single(u => u.UserName == userName);
             }
             return user;
