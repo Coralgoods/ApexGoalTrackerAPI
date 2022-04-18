@@ -15,10 +15,17 @@ namespace ApexGoalTrackerAPI.DataObjects
         [ForeignKey("UserID")]
         public User User { get; set; }
         public string ApexID { get; set; }
+        public int ApexLevel { get; set; }
+        public int NextLevelPercent { get; set; }
         public string UserName { get; set; }
         public DateTime Date { get; set; }
         public int RankSore { get; set; }
         public string RankName { get; set; }
+        public int RankDiv { get; set; }
+        public string RankImg { get; set; }
+        public string RankedSeason { get; set; }
+        public string SelectedLegend { get; set; }
+        public string icon { get; set; }
         public string banner { get; set; }
 
     }

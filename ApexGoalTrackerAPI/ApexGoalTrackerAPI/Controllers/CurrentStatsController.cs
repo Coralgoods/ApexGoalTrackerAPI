@@ -94,6 +94,13 @@ namespace ApexGoalTrackerAPI.Controllers
                 currentStats.RankName = _Userglobal.rank.rankName;
                 currentStats.banner = _Legends.selected.ImgAssets.banner;
                 currentStats.UserName = input.UserName;
+                currentStats.ApexLevel = _Userglobal.level;
+                currentStats.NextLevelPercent = _Userglobal.toNextLevelPercent;
+                currentStats.RankDiv = _Userglobal.rank.rankDiv; 
+                currentStats.RankImg = _Userglobal.rank.rankImg;
+                currentStats.RankedSeason = _Userglobal.rank.rankedSeason;
+                currentStats.SelectedLegend = _Legends.selected.LegendName;
+                currentStats.icon = _Legends.selected.ImgAssets.icon; 
                 context.currentStats.Add(currentStats);
                 context.SaveChanges();
             }
