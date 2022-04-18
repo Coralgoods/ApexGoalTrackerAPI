@@ -4,14 +4,16 @@ using ApexGoalTrackerAPI.DataObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ApexGoalTrackerAPI.Migrations
 {
     [DbContext(typeof(ApexContext))]
-    partial class ApexContextModelSnapshot : ModelSnapshot
+    [Migration("20220418021800_dbupdatewithmore")]
+    partial class dbupdatewithmore
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,14 +31,14 @@ namespace ApexGoalTrackerAPI.Migrations
                     b.Property<string>("ApexID")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ApexLevel")
-                        .HasColumnType("int");
+                    b.Property<string>("ApexLevel")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("NextLevelPercent")
-                        .HasColumnType("int");
+                    b.Property<string>("NextLevelPercent")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("RankDiv")
                         .HasColumnType("int");
