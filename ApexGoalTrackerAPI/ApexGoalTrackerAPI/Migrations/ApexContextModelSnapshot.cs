@@ -35,6 +35,7 @@ namespace ApexGoalTrackerAPI.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("NextLevelPercent")
                         .HasColumnType("int");
 
                     b.Property<int>("RankDiv")
