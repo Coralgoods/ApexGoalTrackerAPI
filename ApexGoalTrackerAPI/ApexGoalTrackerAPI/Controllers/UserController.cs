@@ -51,9 +51,10 @@ namespace ApexGoalTrackerAPI.Controllers
 
         // POST api/<UserController>
         [HttpPost]
-        public void Create([FromBody] UserCreateApi userApi)
+        public async Task <int> Create([FromBody] UserCreateApi userApi)
         {
             User user = new User();
+            User userID = null; 
             using (ApexContext context = new ApexContext())
             {
                 user.UserName = userApi.UserName;
@@ -63,6 +64,20 @@ namespace ApexGoalTrackerAPI.Controllers
                 context.Users.Add(user);
                 context.SaveChanges();
             }
+            using (ApexContext context = new ApexContext())
+            {
+                userID = context.Users.SingleOrDefault(u => u.UserName == userApi.UserName);
+            }
+            if (userID == null)
+            {
+                return -1;
+            }
+            else
+            {
+                return userID.UserID;
+            }
+            
+
         }
 
         // PUT api/<UserController>/5
